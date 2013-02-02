@@ -17,13 +17,6 @@
 }
 
 
-- (void)dealloc {
-	[_movesText release];
-	[_levelFlower release];
-	[_levelNumber0 release];
-	[_levelNumber1 release];
-    [super dealloc];
-}
 
 - (void) setMovesText:(unsigned)moves {
 	_movesText.font = [UIFont fontWithName:@"HelveticaNeueLTStd-Bd" size:16.0];

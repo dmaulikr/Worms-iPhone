@@ -27,10 +27,6 @@
 }
 */
 
-- (void)dealloc {
-	[_pegType release];
-    [super dealloc];
-}
 
 - (void) setPegType:(NSString*)pegType {
 	UIImage *pegImage = nil;

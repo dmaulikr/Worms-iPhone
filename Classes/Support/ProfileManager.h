@@ -53,8 +53,8 @@
 
 @property int _levelNum;
 @property int _nextLevelNum;
-@property (nonatomic, retain, readonly) NSMutableArray *_levels;
-@property (nonatomic, retain, readonly) NSMutableArray *_savedLayout;
+@property (nonatomic, strong, readonly) NSMutableArray *_levels;
+@property (nonatomic, strong, readonly) NSMutableArray *_savedLayout;
 @property BOOL _savedLevel;
 @property int _savedMoves;
 @property BOOL _gameInProgress;

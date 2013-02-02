@@ -12,6 +12,6 @@
 - (void) setMovesText:(unsigned)moves;
 - (void) setLevelNumberImages:(unsigned)levelNum;
 
-@property (nonatomic, retain) LevelFlowerView *_levelFlower;
+@property (nonatomic, strong) LevelFlowerView *_levelFlower;
 
 @end

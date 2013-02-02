@@ -23,12 +23,12 @@ static ProfileManager *_sharedProfileManager = nil;
 		_sharedProfileManager = [[super allocWithZone:NULL] init];
 		
 		NSMutableDictionary *profile = [_sharedProfileManager getProfile];
-		_sharedProfileManager._levelNum = [[profile objectForKey:kGameDataLevelNumKey] intValue];
-		_sharedProfileManager._nextLevelNum = [[profile objectForKey:kGameDataNextLevelNumKey] intValue];
-		[_sharedProfileManager updateLevels:[profile objectForKey:kGameDataLevelsKey]];
-		[_sharedProfileManager updateSavedLayout:[profile objectForKey:kGameDataSavedLayoutKey]];
-		_sharedProfileManager._savedLevel = [[profile objectForKey:kGameDataSavedLevelKey] boolValue];
-		_sharedProfileManager._savedMoves = [[profile objectForKey:kGameDataSavedMovesKey] intValue];
+		_sharedProfileManager._levelNum = [profile[kGameDataLevelNumKey] intValue];
+		_sharedProfileManager._nextLevelNum = [profile[kGameDataNextLevelNumKey] intValue];
+		[_sharedProfileManager updateLevels:profile[kGameDataLevelsKey]];
+		[_sharedProfileManager updateSavedLayout:profile[kGameDataSavedLayoutKey]];
+		_sharedProfileManager._savedLevel = [profile[kGameDataSavedLevelKey] boolValue];
+		_sharedProfileManager._savedMoves = [profile[kGameDataSavedMovesKey] intValue];
 
 		/*
 		// Get level num
@@ -50,40 +50,29 @@ static ProfileManager *_sharedProfileManager = nil;
 }
 
 + (id) allocWithZone:(NSZone*) zone {
-    return [[self sharedProfileManager] retain];
+    return [self sharedProfileManager];
 }
 
 - (id) copyWithZone:(NSZone*) zone {
     return self;
 }
 
-- (id) retain {
-    return self;
-}
+//- (id) retain {
+  //  return self;
+//}
 
-- (NSUInteger) retainCount {
-    return NSUIntegerMax;  //denotes an object that cannot be released
-}
+//- (NSUInteger) retainCount {
+  //  return NSUIntegerMax;  //denotes an object that cannot be released
+//}
 
-- (void) release {
+//- (void) release {
     //do nothing
-}
+//}
 
-- (id) autorelease {
-    return self;
-}
+//- (id) autorelease {
+  //  return self;
+//}
 
-- (void) dealloc {
-//	[[NSNotificationCenter defaultCenter] removeObserver:self];
-	
-	[_currentLayout release];
-	[_currentParsedCharacterData release];
-	[_levels release];
-	[_savedLayout release];
-	[_sharedProfileManager release];
-	
-	[super dealloc];
-}
 
 - (void) applicationWillResignActive {
 	_paused = YES;
@@ -115,7 +104,7 @@ static ProfileManager *_sharedProfileManager = nil;
 	} else {
 		filePath = [[NSBundle mainBundle] pathForResource:@"Data" ofType:@"plist"];
 		initialProfile = [NSMutableDictionary dictionaryWithContentsOfFile:filePath];
-		profile = [NSMutableDictionary dictionaryWithDictionary:[initialProfile objectForKey:kGameDataKey]];
+		profile = [NSMutableDictionary dictionaryWithDictionary:initialProfile[kGameDataKey]];
 	}
 	
 	return profile;
@@ -143,12 +132,12 @@ static ProfileManager *_sharedProfileManager = nil;
 	unsigned numLevels = [_levels count];;
 	
 	NSDictionary *levelData = [self getLevelDataForLevel:_currentLevelParse];
-	while(_currentLevelParse + 1 < numLevels && [levelData objectForKey:kGameDataLayoutKey]) {
+	while(_currentLevelParse + 1 < numLevels && levelData[kGameDataLayoutKey]) {
 		_currentLevelParse++;
 		levelData = [self getLevelDataForLevel:_currentLevelParse];
 	}
 	
-	if (_currentLevelParse < numLevels && ![levelData objectForKey:kGameDataLayoutKey]) {
+	if (_currentLevelParse < numLevels && !levelData[kGameDataLayoutKey]) {
 		[self initializeLayoutForLevel];
 	} else {
 		[[NSNotificationCenter defaultCenter] postNotificationName:@"LEVEL_LAYOUT_PARSED" object:self userInfo:nil];
@@ -161,7 +150,7 @@ static ProfileManager *_sharedProfileManager = nil;
 	[_currentParsedCharacterData setString:@""];
 	
 	NSDictionary *levelData = [self getLevelDataForLevel:_currentLevelParse];
-	NSString *levelIdentifier = [NSString stringWithString:[levelData objectForKey:kGameDataIdentifierKey]];
+	NSString *levelIdentifier = [NSString stringWithString:levelData[kGameDataIdentifierKey]];
 	
 	[self parseLevelXML:levelIdentifier];
 }
@@ -175,19 +164,16 @@ static ProfileManager *_sharedProfileManager = nil;
 	[parser setShouldReportNamespacePrefixes:NO];
 	[parser setShouldResolveExternalEntities:NO];
 	[parser parse];
-	[parser release];
 }
 
 - (void) levelXMLParsed {
 	NSMutableDictionary *levelData = [[NSMutableDictionary alloc] initWithDictionary:[self getLevelDataForLevel:_currentLevelParse]];
 	NSArray *levelLayout = [[NSArray alloc] initWithArray:_currentLayout];
-	[levelData setObject:[NSNumber numberWithInteger:_currentLeastMoves] forKey:kGameDataLeastMovesKey];
-	[levelData setObject:levelLayout forKey:kGameDataLayoutKey];
+	levelData[kGameDataLeastMovesKey] = [NSNumber numberWithInteger:_currentLeastMoves];
+	levelData[kGameDataLayoutKey] = levelLayout;
 	
 	[self setLevelDataForLevel:_currentLevelParse levelData:levelData];
 	[self saveLevels];
-	[levelData release];
-	[levelLayout release];
 	
 	_currentLevelParse++;
 	if (_currentLevelParse < [_levels count]) {
@@ -204,7 +190,7 @@ static ProfileManager *_sharedProfileManager = nil;
 - (void) set_savedLevel:(BOOL)new_savedLevel {
 	_savedLevel = new_savedLevel;
 	NSMutableDictionary *profile = [self getProfile];
-	[profile setObject:[NSNumber numberWithBool:_savedLevel] forKey:kGameDataSavedLevelKey];
+	profile[kGameDataSavedLevelKey] = @(_savedLevel);
 	[self setProfile:profile];
 }
 
@@ -223,7 +209,7 @@ static ProfileManager *_sharedProfileManager = nil;
 
 - (void) saveSavedLayout {
 	NSMutableDictionary *profile = [self getProfile];
-	[profile setObject:_savedLayout forKey:kGameDataSavedLayoutKey];
+	profile[kGameDataSavedLayoutKey] = _savedLayout;
 	[self setProfile:profile];
 }
 
@@ -233,7 +219,7 @@ static ProfileManager *_sharedProfileManager = nil;
 - (void) set_savedMoves:(int)new_savedMoves {
 	_savedMoves = new_savedMoves;
 	NSMutableDictionary *profile = [self getProfile];
-	[profile setObject:[NSNumber numberWithInt:_savedMoves] forKey:kGameDataSavedMovesKey];
+	profile[kGameDataSavedMovesKey] = [NSNumber numberWithInt:_savedMoves];
 	[self setProfile:profile];
 }
 
@@ -243,7 +229,7 @@ static ProfileManager *_sharedProfileManager = nil;
 - (void) set_levelNum:(int)new_levelNum {
 	_levelNum = new_levelNum;
 	NSMutableDictionary *profile = [self getProfile];
-	[profile setObject:[NSNumber numberWithInt:_levelNum] forKey:kGameDataLevelNumKey];
+	profile[kGameDataLevelNumKey] = @(_levelNum);
 	[self setProfile:profile];
 }
 
@@ -253,7 +239,7 @@ static ProfileManager *_sharedProfileManager = nil;
 - (void) set_nextLevelNum:(int)new_nextLevelNum {
 	_nextLevelNum = new_nextLevelNum;
 	NSMutableDictionary *profile = [self getProfile];
-	[profile setObject:[NSNumber numberWithInt:_nextLevelNum] forKey:kGameDataNextLevelNumKey];
+	profile[kGameDataNextLevelNumKey] = @(_nextLevelNum);
 	[self setProfile:profile];
 }
 
@@ -262,15 +248,15 @@ static ProfileManager *_sharedProfileManager = nil;
 }
 
 - (NSDictionary*) getLevelDataForLevel:(int)levelNum {
-	return [_levels objectAtIndex:levelNum];
+	return _levels[levelNum];
 }
 
 - (NSDictionary*) getCurrentLevelData {
-	return [_levels objectAtIndex:_levelNum];
+	return _levels[_levelNum];
 }
 
 - (void) setLevelDataForLevel:(int)levelNum levelData:(NSDictionary*)levelData {
-	[_levels replaceObjectAtIndex:levelNum withObject:levelData];
+	_levels[levelNum] = levelData;
 }
 
 - (void) updateLevels:(NSMutableArray*)newLevels {
@@ -284,7 +270,7 @@ static ProfileManager *_sharedProfileManager = nil;
 
 - (void) saveLevels {
 	NSMutableDictionary *profile = [self getProfile];
-	[profile setObject:_levels forKey:kGameDataLevelsKey];
+	profile[kGameDataLevelsKey] = _levels;
 	[self setProfile:profile];
 }
 
@@ -299,11 +285,10 @@ static NSString * const kColumnElementName = @"Column";
 
 - (void)parser:(NSXMLParser *)parser didStartElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName attributes:(NSDictionary *)attributeDict {
 	if ([elementName isEqualToString:kLevelElementName]) {
-		_currentLeastMoves = [[attributeDict objectForKey:kMovesAttributeName] intValue];
+		_currentLeastMoves = [attributeDict[kMovesAttributeName] intValue];
 	} else if ([elementName isEqualToString:kRowElementName]) {
 		NSMutableArray *emptyArray = [[NSMutableArray alloc] init];
 		[_currentLayout addObject:emptyArray];
-		[emptyArray release];
 	} else if ([elementName isEqualToString:kColumnElementName]) {
 		_accumulatingParsedCharacterData = YES;
 		[_currentParsedCharacterData setString:@""];
@@ -314,7 +299,7 @@ static NSString * const kColumnElementName = @"Column";
 	if ([elementName isEqualToString:kLevelElementName]) {
 	} else if ([elementName isEqualToString:kRowElementName]) {
 	} else if ([elementName isEqualToString:kColumnElementName]) {
-		[[_currentLayout objectAtIndex:[_currentLayout count]-1] addObject:[NSString stringWithString:_currentParsedCharacterData]];
+		[_currentLayout[[_currentLayout count]-1] addObject:[NSString stringWithString:_currentParsedCharacterData]];
 	}
 	
 	// Stop accumulating parsed character data. We won't start again until specific elements begin.
