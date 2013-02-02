@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Music</key>
+	<string>WormsLongWindLoop</string>
+	<key>Click</key>
+	<string>Button_Lo</string>
+	<key>WormAppear</key>
+	<string>PopUp</string>
+	<key>WormDisappear</key>
+	<string>Swoosh</string>
+	<key>WinLevel</key>
+	<string>WinLevel</string>
+</dict>
+</plist>

@@ -1,0 +1,1 @@
+////  HoleObject.h//  LateWorm////  Created by Susan Surapruik on 12/14/09.//  Copyright 2009 __MyCompanyName__. All rights reserved.//#import <Foundation/Foundation.h>@interface HoleObject : UIButton {	unsigned _row;	unsigned _column;		BOOL _enabled;}@property unsigned _row;@property unsigned _column;@property BOOL _enabled;@end

@@ -1,0 +1,1 @@
+#import <UIKit/UIKit.h>@class TableViewController;@protocol TableViewControllerDelegate- (void) fadeMainMenu:(TableViewController*)tableViewController;@end@interface TableViewController : UITableViewController  {	id <NSObject, TableViewControllerDelegate>  delegate;}@property (nonatomic, assign) id <NSObject, TableViewControllerDelegate> delegate;@end

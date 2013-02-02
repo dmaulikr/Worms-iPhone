@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<SnowWorms>
+	<Level leastMoves="6">
+		<Row>
+			<Column>Worm</Column>
+			<Column>Worm</Column>
+			<Column>Worm</Column>
+			<Column>Worm</Column>
+			<Column>Worm</Column>
+		</Row>
+		<Row>
+			<Column>Worm</Column>
+			<Column>Empty</Column>
+			<Column>Empty</Column>
+			<Column>Empty</Column>
+			<Column>Worm</Column>
+		</Row>
+		<Row>
+			<Column>Worm</Column>
+			<Column>Empty</Column>
+			<Column>Empty</Column>
+			<Column>Empty</Column>
+			<Column>Worm</Column>
+		</Row>
+		<Row>
+			<Column>Worm</Column>
+			<Column>Empty</Column>
+			<Column>Empty</Column>
+			<Column>Empty</Column>
+			<Column>Worm</Column>
+		</Row>
+		<Row>
+			<Column>Worm</Column>
+			<Column>Empty</Column>
+			<Column>Empty</Column>
+			<Column>Empty</Column>
+			<Column>Worm</Column>
+		</Row>
+		<Row>
+			<Column>Worm</Column>
+			<Column>Worm</Column>
+			<Column>Worm</Column>
+			<Column>Worm</Column>
+			<Column>Worm</Column>
+		</Row>
+	</Level>
+</SnowWorms>
