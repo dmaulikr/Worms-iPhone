@@ -2,7 +2,7 @@
 //  ProfileManager.m
 //  LateWorm
 //
-//  Created by Susan Surapruik on 10/11/10.
+//  Created by Fred Sharples on 10/11/10.
 //  Copyright 2010 __MyCompanyName__. All rights reserved.
 //
 

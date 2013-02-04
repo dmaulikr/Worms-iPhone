@@ -2,7 +2,7 @@
 //  GardenNoFlowersView.m
 //  LateWorm
 //
-//  Created by Susan Surapruik on 9/28/10.
+//  Created by Fred Sharples on 9/28/10.
 //  Copyright 2010 __MyCompanyName__. All rights reserved.
 //
 

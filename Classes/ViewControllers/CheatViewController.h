@@ -1,1 +1,1 @@
-////  CheatViewController.h////  Created by Susan Surapruik on 7/24/09.//  Copyright 2009 __MyCompanyName__. All rights reserved.//#import "ViewController.h"@interface CheatViewController : ViewController {	UILabel *_textField;}@end
+////  CheatViewController.h////  Created by Fred Sharples on 7/24/09.//  Copyright 2009 __MyCompanyName__. All rights reserved.//#import "ViewController.h"@interface CheatViewController : ViewController {	UILabel *_textField;}@end

@@ -1,1 +1,1 @@
-////  LegalViewController.h//  MadrigalChallenge////  Created by Susan Surapruik on 7/17/09.//  Copyright 2009 __MyCompanyName__. All rights reserved.//#import "ViewController.h"@interface LegalViewController : ViewController {}@end
+////  LegalViewController.h//  MadrigalChallenge////  Created by Fred Sharples on 7/17/09.//  Copyright 2009 __MyCompanyName__. All rights reserved.//#import "ViewController.h"@interface LegalViewController : ViewController {}@end
